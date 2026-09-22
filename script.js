@@ -47,6 +47,13 @@ const jardin =
 const petalosFlotantes =
     document.getElementById("petalosFlotantes");
 
+/*
+    Contenedor de las dos abejas decorativas.
+*/
+const abejas =
+    document.getElementById("abejas");
+
+
 
 const mensaje =
     document.getElementById("mensaje");
@@ -180,7 +187,7 @@ const flores = [
 
     /* --------------------------------------------------------
        GRUPO 1
-       Primeras flores que aparecen
+       Las primeras flores aparecen cerca del centro.
        -------------------------------------------------------- */
 
     {
@@ -196,13 +203,13 @@ const flores = [
 
     {
         grupo: 1,
-        tipo: "simple",
+        tipo: "coreopsis",
         x: 59,
         altura: 12,
         escala: 0.78,
         inclinacion: 7,
         retraso: 0.25,
-        petalos: 7
+        petalos: 8
     },
 
     {
@@ -219,18 +226,18 @@ const flores = [
 
     /* --------------------------------------------------------
        GRUPO 2
-       El jardín comienza a expandirse
+       El jardín comienza a expandirse.
        -------------------------------------------------------- */
 
     {
         grupo: 2,
-        tipo: "margarita",
+        tipo: "calendula",
         x: 28,
         altura: 16,
         escala: 0.9,
         inclinacion: -6,
         retraso: 0.08,
-        petalos: 12
+        petalos: 16
     },
 
     {
@@ -257,19 +264,19 @@ const flores = [
 
     {
         grupo: 2,
-        tipo: "simple",
+        tipo: "coreopsis",
         x: 82,
         altura: 12,
         escala: 0.74,
         inclinacion: -7,
         retraso: 0.48,
-        petalos: 7
+        petalos: 8
     },
 
 
     /* --------------------------------------------------------
        GRUPO 3
-       Las flores comienzan a ocupar los extremos
+       El jardín llega a los extremos.
        -------------------------------------------------------- */
 
     {
@@ -296,30 +303,30 @@ const flores = [
 
     {
         grupo: 3,
-        tipo: "simple",
+        tipo: "calendula",
         x: 35,
         altura: 9.5,
         escala: 0.7,
         inclinacion: 5,
         retraso: 0.4,
-        petalos: 7
+        petalos: 16
     },
 
     {
         grupo: 3,
-        tipo: "margarita",
+        tipo: "coreopsis",
         x: 65,
         altura: 10.5,
         escala: 0.76,
         inclinacion: -4,
         retraso: 0.55,
-        petalos: 12
+        petalos: 8
     },
 
 
     /* --------------------------------------------------------
        GRUPO 4
-       Flores pequeñas del primer plano
+       Flores pequeñas del primer plano.
        -------------------------------------------------------- */
 
     {
@@ -346,24 +353,24 @@ const flores = [
 
     {
         grupo: 4,
-        tipo: "simple",
+        tipo: "calendula",
         x: 44,
         altura: 8,
         escala: 0.64,
         inclinacion: -4,
         retraso: 0.2,
-        petalos: 7
+        petalos: 16
     },
 
     {
         grupo: 4,
-        tipo: "margarita",
+        tipo: "coreopsis",
         x: 55,
         altura: 9.5,
         escala: 0.72,
         inclinacion: 5,
         retraso: 0.28,
-        petalos: 12
+        petalos: 8
     },
 
     {
@@ -379,13 +386,60 @@ const flores = [
 
     {
         grupo: 4,
-        tipo: "margarita",
+        tipo: "calendula",
         x: 87,
         altura: 11,
         escala: 0.75,
         inclinacion: 8,
         retraso: 0.44,
-        petalos: 12
+        petalos: 16
+    },
+
+
+    /* --------------------------------------------------------
+       GRUPO 5
+       Flores protagonistas altas.
+
+       Este grupo aparece cuando comienza Song2.
+
+       Su objetivo es conectar visualmente el jardín inferior
+       con el espacio central sin llenar completamente la pantalla.
+       -------------------------------------------------------- */
+
+    {
+        grupo: 5,
+        tipo: "coreopsis",
+        x: 31,
+        altura: 23.5,
+        escala: 0.88,
+        inclinacion: -7,
+        retraso: 0,
+        petalos: 8,
+        alta: true
+    },
+
+    {
+        grupo: 5,
+        tipo: "calendula",
+        x: 51,
+        altura: 28,
+        escala: 0.9,
+        inclinacion: 4,
+        retraso: 0.32,
+        petalos: 16,
+        alta: true
+    },
+
+    {
+        grupo: 5,
+        tipo: "margarita",
+        x: 70,
+        altura: 24.5,
+        escala: 0.86,
+        inclinacion: 8,
+        retraso: 0.55,
+        petalos: 12,
+        alta: true
     }
 
 ];
@@ -421,9 +475,21 @@ function crearFlor(configuracion) {
         `${configuracion.x}%`
     );
 
+    /*
+        Las flores protagonistas pueden ser muy altas en escritorio,
+        pero limitamos su altura en pantallas cortas.
+
+        De esta forma nunca invaden el mensaje superior.
+    */
+    const alturaFlor =
+        configuracion.alta
+            ? `min(${configuracion.altura}rem, 54vh)`
+            : `${configuracion.altura}rem`;
+
+
     flor.style.setProperty(
         "--altura",
-        `${configuracion.altura}rem`
+        alturaFlor
     );
 
     flor.style.setProperty(
@@ -443,13 +509,16 @@ function crearFlor(configuracion) {
 
 
     /*
-        Las flores pequeñas quedan ligeramente por delante.
+        Las flores altas quedan detrás de las flores pequeñas.
 
-        Esto ayuda a generar sensación de profundidad
-        sin utilizar efectos 3D innecesarios.
+        Esto genera tres niveles visuales:
+        fondo, plano medio y primer plano.
     */
-    flor.style.zIndex = Math.round(
-        20 - configuracion.altura
+    flor.style.zIndex = Math.max(
+        1,
+        Math.round(
+            30 - configuracion.altura
+        )
     );
 
 
@@ -535,6 +604,40 @@ function crearFlor(configuracion) {
             "--angulo",
             `${angulo}deg`
         );
+
+        /*
+            La caléndula tendrá dos capas visuales.
+
+            Los pétalos impares quedan más cerca del centro y
+            ligeramente más pequeños, dando la sensación de
+            una flor más abundante.
+        */
+        if (
+            configuracion.tipo ===
+            "calendula"
+        ) {
+
+            const petaloInterior =
+                indice % 2 !== 0;
+
+
+            petalo.style.setProperty(
+                "--radio-petalo",
+                petaloInterior
+                    ? "-11%"
+                    : "-35%"
+            );
+
+
+            petalo.style.setProperty(
+                "--escala-petalo",
+                petaloInterior
+                    ? "0.74"
+                    : "1"
+            );
+
+        }
+
 
 
         coronaPetalos.appendChild(
@@ -978,6 +1081,26 @@ function iniciarPetalosContinuos() {
 
 
 /* ============================================================
+   ABEJAS
+   ============================================================ */
+
+/*
+    Las abejas aparecen únicamente después de que el jardín
+    está suficientemente desarrollado.
+
+    No intervienen en la experiencia ni reciben clics:
+    son solamente un detalle visual.
+*/
+function activarAbejas() {
+
+    abejas.classList.add(
+        "activas"
+    );
+
+}
+
+
+/* ============================================================
    LÍNEA DE TIEMPO DE SONG1
    ============================================================ */
 
@@ -1095,8 +1218,27 @@ const accionesSong1 = [
 */
 const accionesSong2 = [
 
+    /*
+        Primero nacen las tres flores altas.
+
+        Esto ocurre apenas comienza Song2 para que el centro
+        de la pantalla gane profundidad progresivamente.
+    */
     {
-        tiempo: 91.4,
+        tiempo: 91.2,
+
+        ejecutada: false,
+
+        accion: () =>
+            mostrarGrupoFlores(5)
+    },
+
+
+    /*
+        Comienzan los pétalos suaves.
+    */
+    {
+        tiempo: 91.5,
 
         ejecutada: false,
 
@@ -1120,6 +1262,19 @@ const accionesSong2 = [
             mostrarMensaje(
                 "Gracias por tantos momentos…"
             )
+    },
+
+
+    /*
+        Cuando las flores altas ya comenzaron a crecer,
+        aparecen las dos abejitas.
+    */
+    {
+        tiempo: 93.4,
+
+        ejecutada: false,
+
+        accion: activarAbejas
     },
 
 

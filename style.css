@@ -832,6 +832,13 @@ audio {
 .petalo-flor {
     --angulo: 0deg;
 
+    /*
+        Estas dos variables nos permiten crear flores
+        con diferentes capas de pétalos.
+    */
+    --radio-petalo: -34%;
+    --escala-petalo: 1;
+
     position: absolute;
     top: 50%;
     left: 50%;
@@ -854,10 +861,16 @@ audio {
     box-shadow:
         inset 0 -4px 6px rgba(169, 106, 4, 0.09);
 
+    /*
+        El ángulo distribuye los pétalos alrededor de la flor.
+
+        El radio y la escala podrán variar según la especie.
+    */
     transform:
         translate(-50%, -100%)
         rotate(var(--angulo))
-        translateY(-34%);
+        translateY(var(--radio-petalo))
+        scale(var(--escala-petalo));
 
     transform-origin:
         50%
@@ -1005,6 +1018,119 @@ audio {
 
 
 /* ============================================================
+   COREOPSIS
+   ============================================================ */
+
+/*
+    Flor amarilla más ligera y delicada.
+
+    Los pétalos son más finos y tienen una punta ligeramente
+    irregular para diferenciarla claramente del girasol.
+*/
+.flor--coreopsis {
+    --tamano-flor: clamp(3.7rem, 11vw, 5.7rem);
+}
+
+.flor--coreopsis .petalo-flor {
+    width: 21%;
+    height: 53%;
+
+    border-radius: 35%;
+
+    /*
+        Creamos pequeñas irregularidades en la punta
+        para que no parezca otra margarita idéntica.
+    */
+    clip-path:
+        polygon(
+            0% 14%,
+            20% 0%,
+            50% 12%,
+            80% 0%,
+            100% 14%,
+            77% 100%,
+            23% 100%
+        );
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffe978 0%,
+            #f5c42d 58%,
+            #e8a91d 100%
+        );
+}
+
+.flor--coreopsis .disco-flor {
+    width: 33%;
+
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            #a96b24 0 6%,
+            transparent 7%
+        ),
+        radial-gradient(
+            circle,
+            #88501c 0%,
+            #633815 70%,
+            #45260f 100%
+        );
+}
+
+
+/* ============================================================
+   CALÉNDULA
+   ============================================================ */
+
+/*
+    La caléndula tendrá una apariencia más llena y redondeada.
+
+    JavaScript creará una segunda capa de pétalos más pequeña.
+*/
+.flor--calendula {
+    --tamano-flor: clamp(3.8rem, 11vw, 5.8rem);
+}
+
+.flor--calendula .petalo-flor {
+    width: 23%;
+    height: 46%;
+
+    border-radius:
+        62% 62% 45% 45% /
+        76% 76% 34% 34%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffe66b 0%,
+            #f6bf25 58%,
+            #e9a51a 100%
+        );
+
+    box-shadow:
+        inset 0 -3px 5px rgba(150, 91, 10, 0.08);
+}
+
+.flor--calendula .disco-flor {
+    width: 29%;
+
+    background:
+        radial-gradient(
+            circle at 38% 35%,
+            #e1a52d 0 7%,
+            transparent 8%
+        ),
+        radial-gradient(
+            circle,
+            #b97a24 0%,
+            #8e571c 70%,
+            #654018 100%
+        );
+}
+
+
+/* ============================================================
    MENSAJES
    ============================================================ */
 
@@ -1132,6 +1258,195 @@ audio {
 
 
 /* ============================================================
+   ABEJAS
+   ============================================================ */
+
+.abejas {
+    position: absolute;
+    inset: 0;
+
+    /*
+        Quedan detrás de los textos pero delante del jardín.
+    */
+    z-index: 8;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+/*
+    El cuerpo de la abeja se dibuja únicamente con CSS.
+
+    Las franjas están creadas con un gradiente repetido,
+    por lo que no necesitamos imágenes ni emojis.
+*/
+.abeja {
+    --tamano-abeja: clamp(0.8rem, 3vw, 1.05rem);
+
+    position: absolute;
+
+    width: calc(var(--tamano-abeja) * 1.65);
+    height: var(--tamano-abeja);
+
+    opacity: 0;
+
+    border-radius:
+        55% 48% 48% 55%;
+
+    background:
+        repeating-linear-gradient(
+            90deg,
+            #efc536 0%,
+            #efc536 22%,
+            #493522 22%,
+            #493522 36%,
+            #efc536 36%,
+            #efc536 59%,
+            #493522 59%,
+            #493522 73%,
+            #efc536 73%,
+            #efc536 100%
+        );
+
+    box-shadow:
+        0 3px 7px rgba(75, 52, 24, 0.16);
+
+    transform-origin: center;
+
+    will-change:
+        transform,
+        opacity;
+}
+
+
+/* Alas */
+
+.abeja::before {
+    content: "";
+
+    position: absolute;
+    top: -70%;
+    left: -12%;
+
+    width: 125%;
+    height: 100%;
+
+    background:
+        radial-gradient(
+            ellipse at 30% 60%,
+            rgba(255, 255, 255, 0.80) 0 27%,
+            rgba(220, 226, 212, 0.42) 28% 38%,
+            transparent 40%
+        ),
+        radial-gradient(
+            ellipse at 72% 54%,
+            rgba(255, 255, 255, 0.78) 0 27%,
+            rgba(220, 226, 212, 0.40) 28% 38%,
+            transparent 40%
+        );
+
+    transform-origin:
+        50%
+        90%;
+
+    animation:
+        batirAlas
+        160ms
+        ease-in-out
+        infinite
+        alternate;
+
+    /*
+        Las alas no se mueven hasta que JavaScript
+        activa las abejas.
+    */
+    animation-play-state: paused;
+}
+
+
+/* Cabeza */
+
+.abeja::after {
+    content: "";
+
+    position: absolute;
+    top: 22%;
+    right: -15%;
+
+    width: 44%;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle at 65% 35%,
+            rgba(255, 255, 255, 0.65) 0 7%,
+            transparent 8%
+        ),
+        #493522;
+}
+
+
+/*
+    Primera abeja.
+
+    Cruza lentamente la zona central de izquierda a derecha.
+*/
+.abeja--uno {
+    top: 39%;
+    left: 7%;
+}
+
+
+/*
+    Segunda abeja.
+
+    Hace un recorrido diferente y aparece un poco más abajo.
+*/
+.abeja--dos {
+    top: 53%;
+    right: 9%;
+}
+
+
+/*
+    En la segunda abeja la cabeza queda al otro lado
+    porque su recorrido comienza desde la derecha.
+*/
+.abeja--dos::after {
+    right: auto;
+    left: -15%;
+}
+
+
+/* Solo comienzan a moverse cuando JavaScript activa el grupo */
+
+.abejas.activas .abeja::before {
+    animation-play-state: running;
+}
+
+.abejas.activas .abeja--uno {
+    animation:
+        vueloAbejaUno
+        12s
+        ease-in-out
+        infinite;
+}
+
+.abejas.activas .abeja--dos {
+    animation:
+        vueloAbejaDos
+        14s
+        ease-in-out
+        1.7s
+        infinite;
+}
+
+
+/* ============================================================
    CIERRE
    ============================================================ */
 
@@ -1190,6 +1505,158 @@ audio {
     font-size: clamp(0.9rem, 3vw, 1.05rem);
     font-weight: 600;
     letter-spacing: 0.04em;
+}
+
+
+/* ============================================================
+   PEQUEÑA FLOR DEL CIERRE
+   ============================================================ */
+
+.mini-flor {
+    position: relative;
+
+    width: 3.25rem;
+    height: 3.25rem;
+
+    margin:
+        0.85rem
+        auto
+        0.4rem;
+
+    filter:
+        drop-shadow(
+            0 5px 6px rgba(123, 81, 17, 0.12)
+        );
+}
+
+.mini-flor-cabeza {
+    position: absolute;
+    inset: 0;
+}
+
+
+/* Pétalos */
+
+.mini-petalo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 0.78rem;
+    height: 1.55rem;
+
+    border-radius:
+        58% 58% 44% 44% /
+        72% 72% 34% 34%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff184,
+            #f5c52e 68%,
+            #dda019
+        );
+
+    transform-origin:
+        50%
+        100%;
+}
+
+
+.mini-petalo:nth-child(1) {
+    transform:
+        translate(-50%, -100%)
+        rotate(0deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(2) {
+    transform:
+        translate(-50%, -100%)
+        rotate(45deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(3) {
+    transform:
+        translate(-50%, -100%)
+        rotate(90deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(4) {
+    transform:
+        translate(-50%, -100%)
+        rotate(135deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(5) {
+    transform:
+        translate(-50%, -100%)
+        rotate(180deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(6) {
+    transform:
+        translate(-50%, -100%)
+        rotate(225deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(7) {
+    transform:
+        translate(-50%, -100%)
+        rotate(270deg)
+        translateY(-0.33rem);
+}
+
+.mini-petalo:nth-child(8) {
+    transform:
+        translate(-50%, -100%)
+        rotate(315deg)
+        translateY(-0.33rem);
+}
+
+
+/* Centro */
+
+.mini-flor-centro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 3;
+
+    width: 1.15rem;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle at 38% 34%,
+            #a86c24 0 8%,
+            transparent 9%
+        ),
+        radial-gradient(
+            circle,
+            #87501b,
+            #553014 80%
+        );
+}
+
+
+/*
+    Reducimos un poco el espacio superior de la firma
+    porque ahora tenemos la flor entre ambos textos.
+*/
+.cierre .firma {
+    margin-top: 0.15rem;
 }
 
 
@@ -1422,6 +1889,124 @@ audio {
 
 
 /* ============================================================
+   ANIMACIÓN DE LAS ABEJAS
+   ============================================================ */
+
+/* Movimiento rápido y pequeño de las alas */
+
+@keyframes batirAlas {
+
+    from {
+        transform:
+            scaleY(0.75)
+            rotate(-4deg);
+    }
+
+    to {
+        transform:
+            scaleY(1.08)
+            rotate(4deg);
+    }
+}
+
+
+/*
+    La primera abeja no cruza en línea recta.
+
+    Cambia ligeramente de altura para generar
+    una trayectoria más natural.
+*/
+@keyframes vueloAbejaUno {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate3d(-10vw, 1rem, 0)
+            rotate(-6deg);
+    }
+
+    10% {
+        opacity: 0.85;
+    }
+
+    28% {
+        transform:
+            translate3d(18vw, -1.3rem, 0)
+            rotate(5deg);
+    }
+
+    52% {
+        transform:
+            translate3d(42vw, 0.6rem, 0)
+            rotate(-5deg);
+    }
+
+    76% {
+        opacity: 0.82;
+
+        transform:
+            translate3d(65vw, -1rem, 0)
+            rotate(4deg);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate3d(87vw, 0.4rem, 0)
+            rotate(0deg);
+    }
+}
+
+
+/* Segunda trayectoria, en sentido contrario */
+
+@keyframes vueloAbejaDos {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate3d(9vw, -0.5rem, 0)
+            rotate(5deg);
+    }
+
+    12% {
+        opacity: 0.72;
+    }
+
+    35% {
+        transform:
+            translate3d(-19vw, 1rem, 0)
+            rotate(-5deg);
+    }
+
+    58% {
+        transform:
+            translate3d(-41vw, -1.1rem, 0)
+            rotate(4deg);
+    }
+
+    80% {
+        opacity: 0.70;
+
+        transform:
+            translate3d(-62vw, 0.7rem, 0)
+            rotate(-4deg);
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate3d(-85vw, -0.4rem, 0)
+            rotate(0deg);
+    }
+}
+
+
+/* ============================================================
    PANTALLAS PEQUEÑAS
    ============================================================ */
 
@@ -1499,5 +2084,19 @@ audio {
 
     .petalo-flotante {
         display: none;
+    }
+
+    /*
+        Las abejas siguen formando parte visual del jardín,
+        pero quedan quietas si la persona solicita menos movimiento.
+    */
+    .abejas.activas .abeja {
+        opacity: 0.55;
+
+        animation: none;
+    }
+
+    .abejas.activas .abeja::before {
+        animation: none;
     }
 }
