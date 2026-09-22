@@ -1,0 +1,1503 @@
+/* ============================================================
+   VARIABLES GENERALES
+   ============================================================ */
+
+:root {
+    /* Fondos */
+    --color-fondo: #fffaf0;
+    --color-fondo-calido: #fff3c7;
+
+    /* Amarillos */
+    --amarillo-claro: #ffe66d;
+    --amarillo: #f8c933;
+    --amarillo-intenso: #f4b41a;
+    --amarillo-profundo: #e9a314;
+
+    /* Centros de las flores */
+    --marron-claro: #a86f22;
+    --marron: #74471b;
+    --marron-oscuro: #4c2e16;
+
+    /* Verdes */
+    --verde-claro: #8caf56;
+    --verde: #5f873f;
+    --verde-oscuro: #3f642e;
+
+    /* Texto */
+    --texto-principal: #4b3928;
+    --texto-secundario: #826e5d;
+
+    /* Superficies */
+    --blanco-suave: rgba(255, 255, 255, 0.78);
+
+    /* Sombras */
+    --sombra-suave:
+        0 18px 45px rgba(100, 72, 30, 0.12);
+
+    /* Transiciones */
+    --transicion: 450ms ease;
+}
+
+
+/* ============================================================
+   RESET BÁSICO
+   ============================================================ */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    min-width: 320px;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow: hidden;
+
+    color: var(--texto-principal);
+    background:
+        radial-gradient(
+            circle at 50% 15%,
+            rgba(255, 226, 103, 0.26),
+            transparent 32%
+        ),
+        linear-gradient(
+            180deg,
+            #fffdf7 0%,
+            var(--color-fondo) 48%,
+            #fff4cf 100%
+        );
+
+    font-family:
+        "Segoe UI",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea {
+    font: inherit;
+}
+
+button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+audio {
+    display: none;
+}
+
+
+/* ============================================================
+   CONTENEDOR PRINCIPAL
+   ============================================================ */
+
+.experiencia {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    overflow: hidden;
+    isolation: isolate;
+}
+
+
+/* ============================================================
+   PANTALLA INICIAL
+   ============================================================ */
+
+.pantalla-inicial {
+    position: absolute;
+    inset: 0;
+    z-index: 20;
+
+    display: grid;
+    place-items: center;
+
+    padding:
+        clamp(1.5rem, 5vw, 3rem)
+        clamp(1rem, 5vw, 2rem);
+
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            rgba(255, 220, 82, 0.18),
+            transparent 30%
+        ),
+        linear-gradient(
+            180deg,
+            #fffdf8 0%,
+            #fff8df 100%
+        );
+
+    transition:
+        opacity 900ms ease,
+        visibility 900ms ease;
+}
+
+
+/*
+    JavaScript agregará esta clase cuando comience
+    la experiencia.
+*/
+.pantalla-inicial.oculta {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+
+.inicio-contenido {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    width: min(100%, 32rem);
+
+    text-align: center;
+}
+
+
+/* ============================================================
+   FLOR INICIAL
+   ============================================================ */
+
+.flor-inicial {
+    position: relative;
+
+    width: clamp(7.5rem, 30vw, 10rem);
+    height: clamp(12rem, 42vw, 15rem);
+
+    margin-bottom: clamp(1.4rem, 4vw, 2rem);
+
+    filter:
+        drop-shadow(
+            0 12px 10px rgba(89, 62, 24, 0.12)
+        );
+
+    animation:
+        florRespira 4.8s ease-in-out infinite;
+}
+
+
+/* ------------------------------
+   Cabeza
+   ------------------------------ */
+
+.petalos-iniciales {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    width: 7.8rem;
+    height: 7.8rem;
+
+    transform: translateX(-50%);
+}
+
+
+/*
+    Cada pétalo es una pequeña elipse amarilla.
+
+    Los rotamos alrededor del mismo centro para
+    formar una flor completa.
+*/
+.flor-inicial .petalo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 2.1rem;
+    height: 3.6rem;
+
+    border-radius:
+        55% 55% 48% 48% /
+        62% 62% 38% 38%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff181 0%,
+            var(--amarillo) 60%,
+            var(--amarillo-intenso) 100%
+        );
+
+    box-shadow:
+        inset 0 -5px 8px rgba(169, 105, 4, 0.10);
+
+    transform-origin: 50% 100%;
+}
+
+
+/* Posiciones de los 8 pétalos */
+
+.flor-inicial .petalo-1 {
+    transform:
+        translate(-50%, -100%)
+        rotate(0deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-2 {
+    transform:
+        translate(-50%, -100%)
+        rotate(45deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-3 {
+    transform:
+        translate(-50%, -100%)
+        rotate(90deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-4 {
+    transform:
+        translate(-50%, -100%)
+        rotate(135deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-5 {
+    transform:
+        translate(-50%, -100%)
+        rotate(180deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-6 {
+    transform:
+        translate(-50%, -100%)
+        rotate(225deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-7 {
+    transform:
+        translate(-50%, -100%)
+        rotate(270deg)
+        translateY(-0.7rem);
+}
+
+.flor-inicial .petalo-8 {
+    transform:
+        translate(-50%, -100%)
+        rotate(315deg)
+        translateY(-0.7rem);
+}
+
+
+/* Centro de la flor */
+
+.centro-flor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 3;
+
+    width: 2.7rem;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            #b97d2e 0 8%,
+            transparent 9%
+        ),
+        radial-gradient(
+            circle at 62% 43%,
+            #92571f 0 7%,
+            transparent 8%
+        ),
+        radial-gradient(
+            circle at 43% 67%,
+            #8b501e 0 7%,
+            transparent 8%
+        ),
+        radial-gradient(
+            circle,
+            #a86c27 0%,
+            #744217 65%,
+            #573113 100%
+        );
+
+    box-shadow:
+        inset 0 3px 4px rgba(255, 255, 255, 0.18),
+        0 3px 7px rgba(93, 55, 12, 0.18);
+}
+
+
+/* ------------------------------
+   Tallo
+   ------------------------------ */
+
+.tallo-inicial {
+    position: absolute;
+    top: 6rem;
+    left: 50%;
+
+    width: 0.38rem;
+    height: 7.5rem;
+
+    border-radius: 999px;
+
+    transform:
+        translateX(-50%)
+        rotate(2deg);
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--verde-oscuro),
+            var(--verde-claro),
+            var(--verde)
+        );
+
+    transform-origin: bottom;
+}
+
+
+/* ------------------------------
+   Hojas
+   ------------------------------ */
+
+.hoja {
+    position: absolute;
+
+    width: 3.4rem;
+    height: 1.7rem;
+
+    border-radius:
+        90% 10% 90% 10%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--verde-claro),
+            var(--verde)
+        );
+
+    box-shadow:
+        inset -4px -4px 8px rgba(49, 94, 38, 0.15);
+}
+
+.hoja-izquierda {
+    top: 9rem;
+    left: 1.5rem;
+
+    transform: rotate(25deg);
+}
+
+.hoja-derecha {
+    top: 10.4rem;
+    right: 1.4rem;
+
+    transform:
+        scaleX(-1)
+        rotate(21deg);
+}
+
+
+/* ============================================================
+   TEXTO DE BIENVENIDA
+   ============================================================ */
+
+.detalle-label {
+    margin-bottom: 0.55rem;
+
+    color: #a17c31;
+
+    font-size: clamp(0.75rem, 2.6vw, 0.88rem);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+
+    text-transform: uppercase;
+}
+
+.inicio-contenido h1 {
+    margin-bottom: clamp(1.5rem, 5vw, 2rem);
+
+    color: var(--texto-principal);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(2rem, 9vw, 3.7rem);
+    font-weight: 500;
+    line-height: 1.05;
+
+    text-wrap: balance;
+}
+
+
+/* ============================================================
+   BOTÓN DE INICIO
+   ============================================================ */
+
+.boton-comenzar {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+
+    min-height: 3.25rem;
+
+    padding:
+        0.85rem
+        1.55rem;
+
+    border: 1px solid rgba(204, 155, 26, 0.18);
+    border-radius: 999px;
+
+    color: #55401e;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffe675,
+            #f8c933
+        );
+
+    box-shadow:
+        0 10px 25px rgba(214, 165, 32, 0.23);
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        transform 220ms ease,
+        box-shadow 220ms ease,
+        filter 220ms ease;
+}
+
+.boton-comenzar:active {
+    transform: scale(0.97);
+}
+
+.boton-comenzar:focus-visible,
+.control-audio:focus-visible {
+    outline: 3px solid rgba(129, 95, 23, 0.42);
+    outline-offset: 4px;
+}
+
+.indicacion-inicio {
+    margin-top: 0.85rem;
+
+    color: var(--texto-secundario);
+
+    font-size: 0.78rem;
+}
+
+
+/* Hover únicamente donde realmente existe mouse */
+
+@media (hover: hover) and (pointer: fine) {
+
+    .boton-comenzar:hover {
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 14px 30px rgba(214, 165, 32, 0.30);
+
+        filter: brightness(1.03);
+    }
+}
+
+
+/* ============================================================
+   ESCENA PRINCIPAL
+   ============================================================ */
+
+.escena-principal {
+    position: absolute;
+    inset: 0;
+
+    overflow: hidden;
+
+    opacity: 0;
+    visibility: hidden;
+
+    background:
+        radial-gradient(
+            circle at 50% 25%,
+            rgba(255, 226, 111, 0.30),
+            transparent 28%
+        ),
+        linear-gradient(
+            180deg,
+            #fffdf7 0%,
+            #fff8df 58%,
+            #f8edbd 100%
+        );
+
+    transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+}
+
+
+/*
+    JavaScript activa esta clase después
+    de presionar el botón inicial.
+*/
+.escena-principal.activa {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* ============================================================
+   LUZ DEL FONDO
+   ============================================================ */
+
+.luz-fondo {
+    position: absolute;
+    top: -15%;
+    left: 50%;
+
+    width: min(80vw, 45rem);
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    transform: translateX(-50%);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255, 220, 66, 0.22),
+            rgba(255, 226, 117, 0.08) 45%,
+            transparent 70%
+        );
+
+    filter: blur(8px);
+
+    animation:
+        luzRespira 6s ease-in-out infinite;
+}
+
+
+/* ============================================================
+   JARDÍN
+   ============================================================ */
+
+.jardin {
+    position: absolute;
+    inset:
+        auto
+        0
+        0
+        0;
+
+    z-index: 3;
+
+    height: min(63vh, 34rem);
+
+    pointer-events: none;
+}
+
+
+/*
+    Las siguientes clases todavía no existen en el HTML.
+
+    JavaScript creará cada flor dentro de #jardin y le
+    asignará estas clases y variables personalizadas.
+*/
+.flor {
+    --x: 50%;
+    --altura: 15rem;
+    --tamano-flor: 5.5rem;
+    --escala: 1;
+    --inclinacion: 0deg;
+    --retraso: 0s;
+    --duracion-brisa: 5s;
+
+    position: absolute;
+    bottom: -0.3rem;
+    left: var(--x);
+
+    width: var(--tamano-flor);
+    height: var(--altura);
+
+    transform:
+        translateX(-50%)
+        scale(var(--escala));
+
+    transform-origin: bottom center;
+}
+
+
+/* ============================================================
+   TALLOS DE LAS FLORES DEL JARDÍN
+   ============================================================ */
+
+.tallo-flor {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+
+    width: clamp(0.18rem, 0.5vw, 0.32rem);
+    height: calc(100% - (var(--tamano-flor) * 0.45));
+
+    border-radius: 999px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--verde-oscuro),
+            var(--verde-claro),
+            var(--verde)
+        );
+
+    transform:
+        translateX(-50%)
+        scaleY(0);
+
+    transform-origin: bottom;
+
+    animation:
+        crecerTallo 1.7s
+        cubic-bezier(0.25, 0.75, 0.25, 1)
+        var(--retraso)
+        forwards;
+}
+
+
+/* ============================================================
+   HOJAS DEL JARDÍN
+   ============================================================ */
+
+.hoja-flor {
+    position: absolute;
+    z-index: 2;
+
+    width: calc(var(--tamano-flor) * 0.55);
+    height: calc(var(--tamano-flor) * 0.22);
+
+    opacity: 0;
+
+    border-radius:
+        90% 10% 90% 10%;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--verde-claro),
+            var(--verde)
+        );
+
+    transform-origin: bottom right;
+
+    animation:
+        aparecerHoja 750ms ease
+        calc(var(--retraso) + 1s)
+        forwards;
+}
+
+.hoja-flor--izquierda {
+    left: 7%;
+    bottom: 34%;
+
+    transform:
+        rotate(28deg)
+        scale(0);
+}
+
+.hoja-flor--derecha {
+    right: 6%;
+    bottom: 49%;
+
+    transform:
+        scaleX(-1)
+        rotate(30deg)
+        scale(0);
+
+    animation-delay:
+        calc(var(--retraso) + 1.22s);
+}
+
+/*
+    La hoja derecha necesita su propia animación para conservar
+    la orientación invertida durante toda la apertura.
+*/
+.hoja-flor--derecha {
+    animation-name: aparecerHojaDerecha;
+}
+
+
+/* Apertura específica de la hoja derecha */
+
+@keyframes aparecerHojaDerecha {
+
+    from {
+        opacity: 0;
+
+        transform:
+            scaleX(-1)
+            rotate(22deg)
+            scale(0);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            scaleX(-1)
+            rotate(30deg)
+            scale(1);
+    }
+}
+
+
+/* ============================================================
+   CABEZA DE LAS FLORES
+   ============================================================ */
+
+.flor-cabeza {
+    position: absolute;
+    top: 0;
+    left: 50%;
+
+    z-index: 5;
+
+    width: var(--tamano-flor);
+    height: var(--tamano-flor);
+
+    opacity: 0;
+
+    transform:
+        translateX(-50%)
+        scale(0.12)
+        rotate(var(--inclinacion));
+
+    transform-origin: 50% 85%;
+
+    animation:
+        abrirFlor 1.4s
+        cubic-bezier(0.17, 0.8, 0.32, 1.25)
+        calc(var(--retraso) + 1.25s)
+        forwards;
+}
+
+/*
+    Cuando la flor termina de abrirse, permanece visible
+    y comienza a moverse suavemente como si hubiera brisa.
+*/
+.flor.flor-viva .flor-cabeza {
+    opacity: 1;
+
+    animation:
+        brisaFlor
+        var(--duracion-brisa)
+        ease-in-out
+        infinite;
+}
+
+/* ============================================================
+   CORONA DE PÉTALOS
+   ============================================================ */
+
+.corona-petalos {
+    position: absolute;
+    inset: 0;
+}
+
+
+/*
+    Cada pétalo se colocará alrededor del centro utilizando
+    una variable --angulo que JavaScript asignará.
+*/
+.petalo-flor {
+    --angulo: 0deg;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width: 27%;
+    height: 52%;
+
+    border-radius:
+        56% 56% 44% 44% /
+        70% 70% 35% 35%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #fff384 0%,
+            var(--amarillo) 62%,
+            var(--amarillo-profundo) 100%
+        );
+
+    box-shadow:
+        inset 0 -4px 6px rgba(169, 106, 4, 0.09);
+
+    transform:
+        translate(-50%, -100%)
+        rotate(var(--angulo))
+        translateY(-34%);
+
+    transform-origin:
+        50%
+        100%;
+}
+
+
+/* ============================================================
+   CENTROS DE LAS FLORES
+   ============================================================ */
+
+.disco-flor {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    z-index: 7;
+
+    width: 38%;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            rgba(246, 193, 70, 0.6) 0 5%,
+            transparent 6%
+        ),
+        radial-gradient(
+            circle at 60% 60%,
+            rgba(255, 203, 77, 0.45) 0 5%,
+            transparent 6%
+        ),
+        radial-gradient(
+            circle,
+            #a76c23 0%,
+            #704218 72%,
+            #4d2d13 100%
+        );
+
+    box-shadow:
+        inset 0 2px 3px rgba(255, 255, 255, 0.16),
+        0 2px 5px rgba(71, 42, 14, 0.16);
+}
+
+
+/* ============================================================
+   VARIACIONES DE FLORES
+   ============================================================ */
+
+
+/* Margarita amarilla */
+
+.flor--margarita {
+    --tamano-flor: clamp(4.2rem, 12vw, 6.3rem);
+}
+
+.flor--margarita .petalo-flor {
+    width: 24%;
+    height: 48%;
+}
+
+
+/* Flor sencilla de pétalos más redondeados */
+
+.flor--simple {
+    --tamano-flor: clamp(3.3rem, 10vw, 5rem);
+}
+
+.flor--simple .petalo-flor {
+    width: 32%;
+    height: 46%;
+
+    border-radius:
+        60% 60% 48% 48% /
+        68% 68% 42% 42%;
+}
+
+.flor--simple .disco-flor {
+    width: 34%;
+
+    background:
+        radial-gradient(
+            circle,
+            #d09a2e,
+            #8d5a1f 70%,
+            #5d3818
+        );
+}
+
+
+/* Flor protagonista inspirada en un girasol */
+
+.flor--girasol {
+    --tamano-flor: clamp(5rem, 15vw, 7.8rem);
+}
+
+.flor--girasol .petalo-flor {
+    width: 22%;
+    height: 50%;
+
+    background:
+        linear-gradient(
+            180deg,
+            #ffe66d 0%,
+            #f6bc19 62%,
+            #df9211 100%
+        );
+}
+
+.flor--girasol .disco-flor {
+    width: 46%;
+
+    background:
+        radial-gradient(
+            circle at 35% 32%,
+            #a26a24 0 4%,
+            transparent 5%
+        ),
+        radial-gradient(
+            circle at 62% 28%,
+            #9b6220 0 4%,
+            transparent 5%
+        ),
+        radial-gradient(
+            circle at 58% 65%,
+            #825019 0 4%,
+            transparent 5%
+        ),
+        radial-gradient(
+            circle at 31% 67%,
+            #8e571c 0 4%,
+            transparent 5%
+        ),
+        radial-gradient(
+            circle,
+            #704016 0%,
+            #4d2b12 70%,
+            #38200e 100%
+        );
+}
+
+
+/* ============================================================
+   MENSAJES
+   ============================================================ */
+
+.contenedor-mensaje {
+    position: absolute;
+    top: clamp(12%, 18vh, 22%);
+    left: 50%;
+
+    z-index: 10;
+
+    width: min(88%, 38rem);
+
+    transform: translateX(-50%);
+
+    pointer-events: none;
+}
+
+.mensaje {
+    min-height: 3rem;
+
+    color: var(--texto-principal);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(1.65rem, 7vw, 3.1rem);
+    font-weight: 500;
+    line-height: 1.18;
+
+    text-align: center;
+    text-wrap: balance;
+
+    opacity: 0;
+
+    transform: translateY(0.85rem);
+
+    text-shadow:
+        0 2px 16px rgba(255, 255, 255, 0.86);
+
+    transition:
+        opacity 650ms ease,
+        transform 650ms ease;
+}
+
+
+/*
+    JavaScript agregará esta clase cada vez que
+    aparezca una nueva frase.
+*/
+.mensaje.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+/*
+    Y la quitará antes de cambiar al siguiente texto.
+*/
+.mensaje.saliendo {
+    opacity: 0;
+    transform: translateY(-0.65rem);
+}
+
+
+/* ============================================================
+   PÉTALOS FLOTANTES
+   ============================================================ */
+
+.petalos-flotantes {
+    position: absolute;
+    inset: 0;
+
+    z-index: 7;
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+
+/*
+    JavaScript creará elementos con esta clase.
+
+    Cada uno tendrá una posición, duración y tamaño ligeramente
+    diferente para evitar que parezcan copias idénticas.
+*/
+.petalo-flotante {
+    --x-inicial: 50vw;
+    --x-final: 55vw;
+    --duracion: 8s;
+    --retraso-petalo: 0s;
+    --tamano-petalo: 1rem;
+
+    position: absolute;
+    top: -3rem;
+    left: var(--x-inicial);
+
+    width: var(--tamano-petalo);
+    height: calc(var(--tamano-petalo) * 1.65);
+
+    opacity: 0.78;
+
+    border-radius:
+        65% 35% 65% 35%;
+
+    background:
+        linear-gradient(
+            145deg,
+            #fff18a,
+            #f5c331
+        );
+
+    box-shadow:
+        0 3px 7px rgba(168, 118, 18, 0.11);
+
+    animation:
+        caerPetalo
+        var(--duracion)
+        linear
+        var(--retraso-petalo)
+        forwards;
+}
+
+
+/* ============================================================
+   CIERRE
+   ============================================================ */
+
+.cierre {
+    position: absolute;
+    top: clamp(13%, 18vh, 22%);
+    left: 50%;
+
+    z-index: 12;
+
+    width: min(90%, 38rem);
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform:
+        translateX(-50%)
+        translateY(0.8rem);
+
+    text-align: center;
+
+    transition:
+        opacity 900ms ease,
+        transform 900ms ease,
+        visibility 900ms ease;
+}
+
+.cierre.visible {
+    opacity: 1;
+    visibility: visible;
+
+    transform:
+        translateX(-50%)
+        translateY(0);
+}
+
+.cierre-principal {
+    color: var(--texto-principal);
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    font-size: clamp(1.85rem, 7vw, 3.25rem);
+    line-height: 1.15;
+
+    text-wrap: balance;
+}
+
+.firma {
+    margin-top: 0.85rem;
+
+    color: #856d4b;
+
+    font-size: clamp(0.9rem, 3vw, 1.05rem);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+}
+
+
+/* ============================================================
+   CONTROL DE AUDIO
+   ============================================================ */
+
+.control-audio {
+    position: absolute;
+    top: clamp(1rem, 3vw, 1.5rem);
+    right: clamp(1rem, 3vw, 1.5rem);
+
+    z-index: 40;
+
+    display: grid;
+    place-items: center;
+
+    width: 2.8rem;
+    aspect-ratio: 1;
+
+    border: 1px solid rgba(122, 94, 40, 0.12);
+    border-radius: 50%;
+
+    color: #655027;
+
+    background: rgba(255, 252, 238, 0.78);
+
+    box-shadow:
+        0 6px 20px rgba(83, 61, 28, 0.12);
+
+    backdrop-filter: blur(8px);
+
+    cursor: pointer;
+
+    transition:
+        opacity var(--transicion),
+        transform 220ms ease,
+        background 220ms ease;
+}
+
+.control-audio.oculto {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.control-audio:not(.oculto) {
+    opacity: 1;
+    visibility: visible;
+}
+
+.control-audio:active {
+    transform: scale(0.94);
+}
+
+
+/* ============================================================
+   ANIMACIONES
+   ============================================================ */
+
+
+/* Movimiento casi imperceptible de la flor inicial */
+
+@keyframes florRespira {
+
+    0%,
+    100% {
+        transform:
+            rotate(-1.5deg)
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            rotate(1.5deg)
+            translateY(-0.3rem);
+    }
+}
+
+
+/* Respiración de la luz del fondo */
+
+@keyframes luzRespira {
+
+    0%,
+    100% {
+        opacity: 0.65;
+        transform:
+            translateX(-50%)
+            scale(0.96);
+    }
+
+    50% {
+        opacity: 1;
+        transform:
+            translateX(-50%)
+            scale(1.04);
+    }
+}
+
+
+/* El tallo crece desde el suelo */
+
+@keyframes crecerTallo {
+
+    from {
+        transform:
+            translateX(-50%)
+            scaleY(0);
+    }
+
+    to {
+        transform:
+            translateX(-50%)
+            scaleY(1);
+    }
+}
+
+
+/* Las hojas aparecen después del tallo */
+
+@keyframes aparecerHoja {
+
+    from {
+        opacity: 0;
+
+        transform:
+            rotate(22deg)
+            scale(0);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            rotate(28deg)
+            scale(1);
+    }
+}
+
+
+/* La cabeza de la flor se abre suavemente */
+
+@keyframes abrirFlor {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translateX(-50%)
+            scale(0.08)
+            rotate(var(--inclinacion));
+    }
+
+    70% {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1.08)
+            rotate(var(--inclinacion));
+    }
+
+    100% {
+        opacity: 1;
+
+        transform:
+            translateX(-50%)
+            scale(1)
+            rotate(var(--inclinacion));
+    }
+}
+
+
+/* Brisa ligera después de florecer */
+
+@keyframes brisaFlor {
+
+    0%,
+    100% {
+        transform:
+            translateX(-50%)
+            rotate(
+                calc(var(--inclinacion) - 2deg)
+            );
+    }
+
+    50% {
+        transform:
+            translateX(-50%)
+            rotate(
+                calc(var(--inclinacion) + 2deg)
+            );
+    }
+}
+
+
+/* Pétalos que cruzan la pantalla lentamente */
+
+@keyframes caerPetalo {
+
+    0% {
+        opacity: 0;
+
+        transform:
+            translate3d(0, -2rem, 0)
+            rotate(0deg);
+    }
+
+    10% {
+        opacity: 0.8;
+    }
+
+    70% {
+        opacity: 0.65;
+    }
+
+    100% {
+        opacity: 0;
+
+        transform:
+            translate3d(
+                calc(var(--x-final) - var(--x-inicial)),
+                110vh,
+                0
+            )
+            rotate(520deg);
+    }
+}
+
+
+/* ============================================================
+   PANTALLAS PEQUEÑAS
+   ============================================================ */
+
+@media (max-width: 640px) {
+
+    .inicio-contenido {
+        width: min(100%, 23rem);
+    }
+
+    .jardin {
+        height: min(57vh, 28rem);
+    }
+
+    .contenedor-mensaje,
+    .cierre {
+        top: 14%;
+    }
+
+    .mensaje {
+        padding-inline: 0.25rem;
+    }
+
+    /*
+        En celulares reducimos ligeramente la cantidad visual
+        de profundidad para que el jardín no tape los mensajes.
+    */
+    .flor:nth-child(n + 13) {
+        opacity: 0.88;
+    }
+}
+
+
+/* ============================================================
+   PANTALLAS GRANDES
+   ============================================================ */
+
+@media (min-width: 900px) {
+
+    .jardin {
+        height: min(67vh, 39rem);
+    }
+
+    .contenedor-mensaje,
+    .cierre {
+        top: 18%;
+    }
+}
+
+
+/* ============================================================
+   ACCESIBILIDAD: REDUCCIÓN DE MOVIMIENTO
+   ============================================================ */
+
+/*
+    Si la persona tiene activada la opción de reducir
+    animaciones en su dispositivo, evitamos movimientos
+    continuos e innecesarios.
+*/
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 1ms !important;
+    }
+
+    .flor-inicial,
+    .luz-fondo {
+        animation: none;
+    }
+
+    .petalo-flotante {
+        display: none;
+    }
+}

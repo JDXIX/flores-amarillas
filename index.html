@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+
+    <!--
+        Permite que la página se adapte correctamente a celulares,
+        tablets y computadoras.
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Color utilizado por algunos navegadores móviles -->
+    <meta name="theme-color" content="#fff8df">
+
+    <meta
+        name="description"
+        content="Un pequeño detalle por el Día de las Flores Amarillas."
+    >
+
+    <title>Flores amarillas 💛</title>
+
+    <!-- Estilos principales de la experiencia -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!--
+        Contenedor principal de toda la experiencia.
+
+        Tendremos solamente dos momentos:
+        1. Pantalla de bienvenida.
+        2. Experiencia de flores amarillas.
+    -->
+    <main class="experiencia" id="experiencia">
+
+        <!-- =====================================================
+             PANTALLA INICIAL
+             ===================================================== -->
+
+        <section
+            class="pantalla-inicial"
+            id="pantallaInicial"
+            aria-labelledby="tituloInicio"
+        >
+            <div class="inicio-contenido">
+
+                <!--
+                    Esta flor será construida completamente con CSS.
+                    No utilizamos una imagen para poder animarla pétalo
+                    por pétalo cuando diseñemos los estilos.
+                -->
+                <div class="flor-inicial" aria-hidden="true">
+
+                    <div class="petalos-iniciales">
+                        <span class="petalo petalo-1"></span>
+                        <span class="petalo petalo-2"></span>
+                        <span class="petalo petalo-3"></span>
+                        <span class="petalo petalo-4"></span>
+                        <span class="petalo petalo-5"></span>
+                        <span class="petalo petalo-6"></span>
+                        <span class="petalo petalo-7"></span>
+                        <span class="petalo petalo-8"></span>
+
+                        <span class="centro-flor"></span>
+                    </div>
+
+                    <span class="tallo-inicial"></span>
+
+                    <span class="hoja hoja-izquierda"></span>
+                    <span class="hoja hoja-derecha"></span>
+
+                </div>
+
+
+                <!-- Texto inicial muy breve -->
+                <p class="detalle-label">
+                    Un pequeño detalle para hoy
+                </p>
+
+                <h1 id="tituloInicio">
+                    Para ti 💛
+                </h1>
+
+
+                <!--
+                    Es necesario que la persona toque este botón.
+
+                    Además de iniciar la experiencia, este clic nos permitirá
+                    comenzar la reproducción del audio respetando las
+                    restricciones de los navegadores modernos.
+                -->
+                <button
+                    class="boton-comenzar"
+                    id="botonComenzar"
+                    type="button"
+                >
+                    <span>Abrir</span>
+                    <span aria-hidden="true">🌼</span>
+                </button>
+
+                <p class="indicacion-inicio">
+                    Toca para comenzar
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- =====================================================
+             EXPERIENCIA PRINCIPAL
+             ===================================================== -->
+
+        <section
+            class="escena-principal"
+            id="escenaPrincipal"
+            aria-hidden="true"
+        >
+
+            <!--
+                Luz decorativa del fondo.
+                Será muy tenue y se animará lentamente.
+            -->
+            <div class="luz-fondo" aria-hidden="true"></div>
+
+
+            <!--
+                Aquí JavaScript irá creando las flores.
+
+                No todas serán iguales:
+                tendremos flores pequeñas, margaritas amarillas
+                y algunas flores protagonistas similares a girasoles.
+            -->
+            <div
+                class="jardin"
+                id="jardin"
+                aria-hidden="true"
+            ></div>
+
+
+            <!--
+                Contenedor para los pétalos que aparecerán flotando
+                durante algunas partes de la experiencia.
+            -->
+            <div
+                class="petalos-flotantes"
+                id="petalosFlotantes"
+                aria-hidden="true"
+            ></div>
+
+
+            <!-- =================================================
+                 MENSAJES
+                 ================================================= -->
+
+            <!--
+                JavaScript cambiará este texto según avance
+                la música y la animación.
+            -->
+            <div
+                class="contenedor-mensaje"
+                id="contenedorMensaje"
+                aria-live="polite"
+            >
+                <p
+                    class="mensaje"
+                    id="mensaje"
+                ></p>
+            </div>
+
+
+            <!-- =================================================
+                 CIERRE
+                 ================================================= -->
+
+            <!--
+                Esta sección permanece oculta hasta el final.
+
+                Para ese momento el jardín ya estará completamente
+                florecido y las flores formarán visualmente el regalo.
+            -->
+            <div
+                class="cierre"
+                id="cierre"
+                aria-hidden="true"
+            >
+                <p class="cierre-principal">
+                    Estas flores son para ti
+                    <span aria-hidden="true">🌻</span>
+                </p>
+
+                <p class="firma">
+                    Con cariño, Jordy
+                </p>
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             CONTROL DE AUDIO
+             ===================================================== -->
+
+        <!--
+            Aparecerá únicamente después de comenzar la experiencia.
+
+            Será un botón pequeño y discreto para permitir pausar
+            o reanudar la música sin quitar protagonismo a las flores.
+        -->
+        <button
+            class="control-audio oculto"
+            id="controlAudio"
+            type="button"
+            aria-label="Pausar música"
+            title="Pausar música"
+        >
+            <span id="iconoAudio" aria-hidden="true">
+                ♪
+            </span>
+        </button>
+
+    </main>
+
+
+    <!-- =========================================================
+         AUDIOS
+         ========================================================= -->
+
+    <!--
+        Canción 1.
+
+        JavaScript hará que comience desde el segundo 17.
+        No usamos autoplay porque la reproducción comenzará
+        después de que la persona presione "Abrir".
+    -->
+    <audio id="song1" preload="auto">
+        <source
+            src="assets/Song1.mp3"
+            type="audio/mpeg"
+        >
+
+        Tu navegador no permite reproducir audio.
+    </audio>
+
+
+    <!--
+        Canción 2.
+
+        Comenzará desde el minuto 1:31, es decir,
+        desde el segundo 91.
+
+        Cuando llegue al final podrá volver a ese mismo punto
+        para seguir acompañando la pantalla final.
+    -->
+    <audio id="song2" preload="auto">
+        <source
+            src="assets/Song2.mp3"
+            type="audio/mpeg"
+        >
+
+        Tu navegador no permite reproducir audio.
+    </audio>
+
+
+    <!-- Lógica y animaciones de la experiencia -->
+    <script src="script.js"></script>
+
+</body>
+</html>
